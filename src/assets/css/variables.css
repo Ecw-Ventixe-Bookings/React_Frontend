@@ -1,0 +1,66 @@
+:root {
+    /* Secondary (Blue) Colors */
+    --secondary-110: #1c2348;
+    --secondary-100: #37437d;
+    --secondary-90: #505ea2;
+    --secondary-80: #6f78bf;
+    --secondary-70: #7f7dbf;
+    --secondary-60: #9ba0d5;
+    --secondary-50: #bdbdf9;
+    
+    /* Primary (Pink/Purple) Colors */
+    --primary-100: #f236f9;
+    --primary-90: #F5BFA;
+    --primary-50: #fcdbfe;
+    --primary-40: #fc57fe;
+    --primary-30: #fde9fe;
+    
+    /* Yellow Colors */
+    --yellow-100: #fca339;
+    --yellow-90: #ffefcb;
+    
+    /* Grey Scale */
+    --grey-10: #ffffff;
+    --grey-20: #f7f7f7;
+    --grey-30: #ededfd;
+    --grey-40: #e5e5e1;
+    --grey-50: #c3c3c4;
+    --grey-60: #6f6f91;
+    --grey-70: #777779;
+    --grey-80: #636365;
+    --grey-90: #343435;
+    --grey-100: #1e1e20;
+    
+    /* Cool Grey Scale */
+    --cool-grey-10: #e1e1ff;
+    --cool-grey-20: #e5e5f5;
+    --cool-grey-30: #d0d0ed;
+    --cool-grey-40: #d1d2ed;
+    --cool-grey-50: #b0b1ed;
+    --cool-grey-60: #8f8f95;
+    --cool-grey-70: #7373a7;
+    --cool-grey-80: #5652C;
+    --cool-grey-90: #393b30;
+    --cool-grey-100: #131314;
+    
+    /* Base Theme Colors */
+    --color-background: var(--grey-10);
+    --color-text: var(--grey-90);
+    --color-primary: var(--primary-100);
+    --color-secondary: var(--secondary-100);
+    --color-accent: var(--yellow-100);
+    --color-border: var(--grey-30);
+    --color-hover: var(--grey-20);
+    --color-active: var(--cool-grey-10);
+      
+
+
+    --font-weight-light: 300;
+    --font-weight-regular: 400;
+    --font-weight-medium: 500;
+    --font-weight-semibold: 600;
+    --font-weight-bold: 700;
+
+    --screensize-tablet: 768px;
+    --screensize-desktop: 1200px;
+}
