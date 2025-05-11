@@ -6,6 +6,7 @@ import CenterLayout from "./Layouts/CenterLayout"
 import { Login } from "./Pages/Login"
 import { NotFound } from "./Pages/NotFound"
 import { Register } from "./Pages/Register"
+import { Events } from "./Pages/Events"
 
 
 function App() {
@@ -16,6 +17,7 @@ function App() {
         
         <Route element={<PortalLayout />}>
           <Route path="/" element={<DashBoard />} />
+          <Route path="/events" element={<Events />} />
         </Route>
 
         <Route element={<CenterLayout />}>

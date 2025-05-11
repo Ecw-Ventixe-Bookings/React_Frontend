@@ -40,6 +40,7 @@ nav {
         display: flex;
         gap: 0.5rem;
         font-weight: var(--font-weight-light);
+        margin-bottom: 3rem;
 
         span {
             display: none;
@@ -51,8 +52,31 @@ nav {
             }
         }
     }
-
     
+    .nav-links {
+        display: flex;
+        flex-direction: column;
+        gap: 1.5em;
+    }
+
+    a {
+        display: flex;
+        gap: 1em;
+        font-size: 1.3rem;
+        color: var(--secondary-100);
+
+        span {
+            display: none;
+
+            @media(width > 1200px) {
+                display: inline;
+            }
+        }        
+    }
+
+    .active {
+        color: var(--primary-100);
+    }
 }
 
 header {
