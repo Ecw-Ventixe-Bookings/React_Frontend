@@ -17,7 +17,7 @@
     grid-template-columns: 1fr;
     grid-template-areas: "nav" "main" "footer";
     
-    @media(width > 768px) {
+    @media(width >= 768px) {
         grid-template-columns: 80px 1fr;
         grid-template-areas: 
         "nav header"
@@ -52,6 +52,14 @@ nav {
             }
         }
     }
+
+    .pageTitle {
+        display: none;
+    }
+
+    .nav-mobile-menu-btn {
+        display: none;
+    }
     
     .nav-links {
         display: flex;
@@ -68,7 +76,7 @@ nav {
         span {
             display: none;
 
-            @media(width > 1200px) {
+            @media(width > 1200px), (width <  768px) {
                 display: inline;
             }
         }        
@@ -77,13 +85,52 @@ nav {
     .active {
         color: var(--primary-100);
     }
+
+    @media(width < 768px) {
+        position: relative;
+        display: flex;
+        justify-content: space-between;
+
+        .logo {
+            margin: 0;
+        }
+
+        .pageTitle {
+            display: block;
+            font-size: 1.4rem;
+        }
+
+        .nav-mobile-menu-btn {
+            display: block;
+            border: none;
+            background-color: transparent;
+
+            i {
+                font-size: 1.5rem;
+            }
+        }
+
+        .nav-links {
+            display: none;
+            position: absolute;
+            top: 100%;
+            right: 0;
+
+            padding: 1rem;
+            background-color: var(--cool-grey-10);
+        }
+
+        .nav-links.show {
+            display: flex;
+        }
+    }
 }
 
 header {
     display: none;
     grid-area: header;
     background-color: var(--grey-20);
-    padding: 1.5rem;
+    padding: 1rem 1.5rem;
     border-radius: 16px;
 
     @media(width > 768px) {
@@ -101,7 +148,7 @@ main {
 footer {
     grid-area: footer;
     background-color: var(--grey-20);
-    padding: 1.5rem;
+    padding: 1rem 1.5rem;
     border-radius: 16px;
 
     font-size: 0.7rem;

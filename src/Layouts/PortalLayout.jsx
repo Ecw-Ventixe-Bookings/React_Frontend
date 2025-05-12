@@ -18,7 +18,7 @@ function PortalLayout() {
 
   return (
     <div className='portal-wrapper'>
-        <Nav />
+        <Nav pageName = {pageName} />
         <Header pageName = {pageName} />
             <main>
                 <Outlet />

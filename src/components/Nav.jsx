@@ -1,9 +1,13 @@
-import React from 'react'
+import React, { useState } from 'react'
 
 import appLogo from '../assets/images/VentixeLogo.svg'
 import { NavLink } from 'react-router-dom'
 
-export const Nav = () => {
+export const Nav = ({pageName = 'Dashboard'}) => {
+  const [showMenu, setShowMenu] = useState(false)
+
+  
+
   return (
     <nav>
         <div className='logo'>
@@ -11,7 +15,15 @@ export const Nav = () => {
           <span>Ventixe</span>
         </div>
 
-        <div className='nav-links'>
+        <h1 className='pageTitle'>{pageName}</h1>
+
+        <button 
+          className='nav-mobile-menu-btn'
+          onClick={() => setShowMenu(!showMenu)}>
+            <i className="bi bi-list"></i>
+        </button>
+
+        <div className={showMenu ? 'nav-links show' : 'nav-links'}>
           <NavLink to="/">
             <i className="bi bi-grid"></i> 
             <span>Dashboard</span>
@@ -20,7 +32,7 @@ export const Nav = () => {
             <i className="bi bi-ticket-perforated"></i> 
             <span>Events</span>
           </NavLink>
-        </div>        
+        </div>
     </nav>
   )
 }

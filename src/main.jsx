@@ -7,6 +7,7 @@ import './assets/css/fonts.css'
 import './assets/css/variables.css'
 import './assets/css/index.css'
 import './assets/css/app.css'
+import './assets/css/sections.css'
 
 createRoot(document.getElementById('root')).render(
   <StrictMode>
