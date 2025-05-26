@@ -9,8 +9,7 @@ export const Events = () => {
   }, [])
 
   async function getEvents() {
-    const res = await fetch("https://localhost:7212")
-    
+    const res = await fetch("https://localhost:7212")    
     const data = await res.json()
     setEvents(data.data)
   }

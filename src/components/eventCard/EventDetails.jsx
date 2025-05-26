@@ -20,10 +20,8 @@ export default function EventDetails() {
     }, [])
 
     async function getEvent() {
-        const res = await fetch(`https://localhost:7212/${id}`)
-    
+        const res = await fetch(`https://localhost:7212/${id}`)    
         const data = await res.json()
-        console.log(data)
         setEvent(data.data)
     }
 
