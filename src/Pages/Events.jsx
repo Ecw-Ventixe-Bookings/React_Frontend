@@ -1,22 +1,27 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import { EventCard } from '../components/eventCard/EventCard'
 
 export const Events = () => {
+  const [events, setEvents] = useState([])
 
-  const event = {
-    category: 'Music',
-    status: 'Active',
-    title: 'Symphony under the stars',
-    location: 'Scandinavium, Göteborg',
-    price: 500
+  useEffect(() => {
+    getEvents()
+  }, [])
+
+  async function getEvents() {
+    const res = await fetch("https://localhost:7212")
+    
+    const data = await res.json()
+    setEvents(data.data)
   }
+  
 
   return (
     <section className='section-events'>
-        <EventCard event = {event} />
-        <EventCard event = {event} />
-        <EventCard event = {event} />
-        <EventCard event = {event} />
+      {events.map(e => (
+          <EventCard key={e.id} event={e} />
+        )
+      )}
     </section>
   )
 }

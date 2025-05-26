@@ -15,11 +15,12 @@ function PortalLayout() {
   }
 
   const pageName = getCurrentPageName()
+  const showBackButton = /^\/events\/[^/]+$/.test(location.pathname);
 
   return (
     <div className='portal-wrapper'>
-        <Nav pageName = {pageName} />
-        <Header pageName = {pageName} />
+        <Nav pageName = {pageName} showBackButton={showBackButton} />
+        <Header pageName = {pageName} showBackButton={showBackButton} />
             <main>
                 <Outlet />
             </main>

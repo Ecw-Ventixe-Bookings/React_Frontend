@@ -1,11 +1,11 @@
 import React, { useState } from 'react'
 
 import appLogo from '../assets/images/VentixeLogo.svg'
-import { NavLink } from 'react-router-dom'
+import { NavLink, useNavigate } from 'react-router-dom'
 
-export const Nav = ({pageName = 'Dashboard'}) => {
+export const Nav = ({pageName = 'Dashboard', showBackButton}) => {
   const [showMenu, setShowMenu] = useState(false)
-
+  const navigate = useNavigate()
   
 
   return (
@@ -15,7 +15,17 @@ export const Nav = ({pageName = 'Dashboard'}) => {
           <span>Ventixe</span>
         </div>
 
-        <h1 className='pageTitle'>{pageName}</h1>
+        <h1 className='pageTitle'>
+          {showBackButton && (
+            <button
+              className='backBtn' 
+              onClick={() => navigate(-1)}
+              aria-label='Go Back.'>
+                <i className="bi bi-arrow-left"></i>
+            </button>
+          )} 
+          {pageName}
+        </h1>
 
         <button 
           className='nav-mobile-menu-btn'

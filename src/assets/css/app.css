@@ -36,6 +36,16 @@ nav {
     padding: 1.5rem;
     border-radius: 16px;
 
+    .backBtn {
+        border: none;
+        background: none;
+        margin-right: 1rem;
+
+        i {
+            font-size: 1.3rem;
+        }
+    }
+
     .logo {
         display: flex;
         gap: 0.5rem;
@@ -132,6 +142,16 @@ header {
     background-color: var(--grey-20);
     padding: 1rem 1.5rem;
     border-radius: 16px;
+
+    .backBtn {
+        border: none;
+        background: none;
+        margin-right: 1rem;
+
+        i {
+            font-size: 1.3rem;
+        }
+    }
 
     @media(width > 768px) {
         display: block;
