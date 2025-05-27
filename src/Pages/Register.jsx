@@ -1,7 +1,11 @@
 import React, { useState } from 'react'
 import { useForm } from '../customHooks/useForm'
+import { Link, useNavigate } from 'react-router-dom';
+import { apiBaseUrls } from '../helpers/apiHelper';
+
 
 export const Register = () => {
+  const navigate = useNavigate()
 
   const {
     values,
@@ -14,8 +18,16 @@ export const Register = () => {
     confirmPassword: ''
   });
 
-  function onSubmit(formData) {
-    console.log('Submitted data:', formData);
+  async function onSubmit(formData) {
+    const res = await fetch(apiBaseUrls.CreateAccount, {
+      method: "POST",
+      headers: {
+        'content-type': 'application/json'
+      },
+      body: JSON.stringify(formData)
+    })
+
+    if (res.ok) navigate('/confirm-email')
   }
 
   return (
@@ -59,6 +71,9 @@ export const Register = () => {
       </div>
 
       <button type='submit' className='btn btn-primary'>Register</button>
+
+      <p>Already have an account? <Link to={"/login"}>Log in</Link></p>
+
     </form>
   );  
 }

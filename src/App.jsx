@@ -8,6 +8,7 @@ import { NotFound } from "./Pages/NotFound"
 import { Register } from "./Pages/Register"
 import { Events } from "./Pages/Events"
 import EventDetails from "./components/eventCard/EventDetails"
+import ConfirmEmail from "./Pages/ConfirmEmail"
 
 
 function App() {
@@ -25,6 +26,7 @@ function App() {
         <Route element={<CenterLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
+          <Route path="/confirm-email" element={<ConfirmEmail />} />
         </Route>
 
         

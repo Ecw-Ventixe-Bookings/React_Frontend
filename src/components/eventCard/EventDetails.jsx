@@ -1,5 +1,6 @@
 import React, { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
+import { apiBaseUrls } from '../../helpers/apiHelper'
 
 import defaultEventArtImg from "../../assets/images/DefaultEventArt.jpg"
 import defaultEventComedyImg from "../../assets/images/DefaultEventComedy.jpg"
@@ -10,6 +11,7 @@ import './eventDetails.css'
 
 export default function EventDetails() {
     const { id } = useParams();
+    const [ticketCount, setTicketCount] = useState(0)
     const [event, setEvent] = useState({
         category: {},
         venue: {}
@@ -17,12 +19,19 @@ export default function EventDetails() {
 
     useEffect( () => {
         getEvent()
+        getTicketCount()
     }, [])
 
     async function getEvent() {
-        const res = await fetch(`https://localhost:7212/${id}`)    
+        const res = await fetch(`${apiBaseUrls.eventService}/${id}`)    
         const data = await res.json()
         setEvent(data.data)
+    }
+
+    async function getTicketCount() {
+        const res = await fetch(`${apiBaseUrls.bookingService}/${id}`)
+        const data = await res.json()
+        setTicketCount(data)
     }
 
     let imgSrc;
@@ -61,6 +70,9 @@ export default function EventDetails() {
                 <div>
                     <p>{new Date(event.startDateTime).toLocaleString()}</p>
                     <p>{event.venue.name}, {event.venue.address}, {event.venue.city}</p>
+                </div>
+                <div className='event-tickets-left'>
+                    <p>{event.totalTickets - ticketCount} Tickets left</p>
                 </div>
                 <div>
                     <p className='event-price'>{event.ticketPrice} kr</p>
