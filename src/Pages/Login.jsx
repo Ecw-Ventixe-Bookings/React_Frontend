@@ -1,11 +1,13 @@
 import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { apiBaseUrls } from '../helpers/apiHelper';
+import { useAuth } from '../Contexts/AuthContext';
 
 export const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
+  const {login} = useAuth()
 
   async function handleSubmit(e) {
     e.preventDefault();
@@ -27,10 +29,7 @@ export const Login = () => {
       const jwt = await res.text()
 
       if (jwt) {
-        localStorage.setItem('token', jwt)
-        
-        const claims = JSON.parse( atob(jwt.split('.')[1]) )
-        console.log(`Welcome: ${claims.email} <${claims.role}>`)
+        login(jwt)
         navigate('/')
       }
     }

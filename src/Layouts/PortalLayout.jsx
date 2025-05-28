@@ -8,7 +8,7 @@ function PortalLayout() {
   const location = useLocation()
 
   const getCurrentPageName = () => {
-    if (location.pathname === '/') return 'Dashboard'
+    if (location.pathname === '/') return 'Events'
 
     const path = location.pathname.substring(1).split('/')[0]
     return path.charAt(0).toUpperCase() + path.substring(1)

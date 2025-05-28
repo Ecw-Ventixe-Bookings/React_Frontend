@@ -9,29 +9,32 @@ import { Register } from "./Pages/Register"
 import { Events } from "./Pages/Events"
 import EventDetails from "./components/eventCard/EventDetails"
 import ConfirmEmail from "./Pages/ConfirmEmail"
+import { AuthProvider } from "./Contexts/AuthContext"
 
 
 function App() {
 
   return (
     <CookiesProvider>
+      <AuthProvider>
       <Routes>
         
         <Route element={<PortalLayout />}>
-          <Route path="/" element={<DashBoard />} />
-          <Route path="/events" element={<Events />} />
+          <Route path="/dashboard" element={<DashBoard />} />
+          <Route path="/" element={<Events />} />
           <Route path="/events/:id" element={<EventDetails />} />
         </Route>
 
         <Route element={<CenterLayout />}>
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/confirm-email" element={<ConfirmEmail />} />
+          <Route path="/confirm-email/:email" element={<ConfirmEmail />} />
         </Route>
 
         
         <Route path="*" element={<NotFound />} />      
       </Routes>
+      </AuthProvider>
     </CookiesProvider>
   )
 }

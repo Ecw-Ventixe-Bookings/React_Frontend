@@ -1,11 +1,14 @@
 import React, { useState } from 'react'
 
+
 import appLogo from '../assets/images/VentixeLogo.svg'
 import { NavLink, useNavigate } from 'react-router-dom'
+import { useAuth } from '../Contexts/AuthContext'
 
 export const Nav = ({pageName = 'Dashboard', showBackButton}) => {
   const [showMenu, setShowMenu] = useState(false)
   const navigate = useNavigate()
+  const {isAuthenticated} = useAuth()
   
 
   return (
@@ -34,14 +37,20 @@ export const Nav = ({pageName = 'Dashboard', showBackButton}) => {
         </button>
 
         <div className={showMenu ? 'nav-links show' : 'nav-links'}>
+          
           <NavLink to="/">
-            <i className="bi bi-grid"></i> 
-            <span>Dashboard</span>
-          </NavLink>
-          <NavLink to="/events">
             <i className="bi bi-ticket-perforated"></i> 
             <span>Events</span>
           </NavLink>
+          
+          {isAuthenticated ? (
+            <NavLink to="/dashboard">
+              <i className="bi bi-grid"></i> 
+              <span>Dashboard</span>
+            </NavLink>
+          ):(<></>)}
+          
+          
         </div>
     </nav>
   )

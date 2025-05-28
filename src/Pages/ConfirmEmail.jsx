@@ -3,10 +3,14 @@ ChatGpt and ClaudeAi has been used to create this page, the code has been altere
 */
 
 import React, { useRef, useState } from 'react'
+import { useNavigate, useParams } from 'react-router-dom';
+import { apiBaseUrls } from '../helpers/apiHelper';
 
 export default function ConfirmEmail() {
     const [code, setCode] = useState(["", "", "", "", "", ""])
     const inputsRef = useRef([])
+    const navigate = useNavigate()
+    const {email} = useParams()
 
     const handleChange = (value, index) => {
     if (/^\d?$/.test(value)) {
@@ -34,34 +38,48 @@ export default function ConfirmEmail() {
     inputsRef.current[0]?.focus();
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
     const enteredCode = code.join('');
-    console.log('Verifying code:', enteredCode);
 
-    // TODO: Replace with real API call
-    // fetch('/api/verify', { method: 'POST', body: JSON.stringify({ code: enteredCode }) })
+    const jsonData =JSON.stringify( {
+      code: enteredCode,
+      email: email
+    })
+
+    const res = await fetch(apiBaseUrls.VerifyEmail, {
+      method: "POST",
+      headers: { 'content-type': 'application/json' },
+      body: jsonData
+    })
+
+    if (res.ok) navigate("/login")
   };
 
   return (
     <form className='confirm-email-form' onSubmit={handleSubmit}>
-        <button className='clear-verification-inputs' onClick={handleReset}>
-            <i class="bi bi-x-circle"></i>
-        </button>
+      <button className='clear-verification-inputs' onClick={handleReset}>
+        <i className="bi bi-x-circle"></i>
+      </button>
 
-        <div className="verification-input-group" >
-            {code.map((digit, idx) => (
-            <input
-                key={idx}
-                type="text"
-                maxLength="1"
-                value={digit}
-                onChange={(e) => handleChange(e.target.value, idx)}
-                onKeyDown={(e) => handleKeyDown(e, idx)}
-                ref={(el) => (inputsRef.current[idx] = el)}
-            />
+      <div className="verification-input-group" >
+        {code.map((digit, idx) => (
+          <input
+            key={idx}
+            type="text"
+            maxLength="1"
+            value={digit}
+            onChange={(e) => handleChange(e.target.value, idx)}
+            onKeyDown={(e) => handleKeyDown(e, idx)}
+            ref={(el) => (inputsRef.current[idx] = el)}
+          />
             ))}
         </div>
+        
+        <div>
+            <p>Check your email for a verification code</p>
+        </div>           
+
         <button className='confirm-email-btn' type="submit">Verify</button>
     </form>
   );

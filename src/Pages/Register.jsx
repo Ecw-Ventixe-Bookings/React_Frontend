@@ -27,7 +27,7 @@ export const Register = () => {
       body: JSON.stringify(formData)
     })
 
-    if (res.ok) navigate('/confirm-email')
+    if (res.ok) navigate(`/confirm-email/${formData.email}`)
   }
 
   return (

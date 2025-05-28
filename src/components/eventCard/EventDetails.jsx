@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { useNavigate, useParams } from 'react-router-dom'
 import { apiBaseUrls } from '../../helpers/apiHelper'
+import BookEventModal from '../BookEventModal'
 
 import defaultEventArtImg from "../../assets/images/DefaultEventArt.jpg"
 import defaultEventComedyImg from "../../assets/images/DefaultEventComedy.jpg"
@@ -8,14 +9,33 @@ import defaultEventMusicImg from "../../assets/images/DefaultEventMusic.jpg"
 import defaultEventGenericImg from "../../assets/images/DefaultEventGeneric.jpg"
 
 import './eventDetails.css'
+import { useAuth } from '../../Contexts/AuthContext'
+import { useForm } from '../../customHooks/useForm'
 
 export default function EventDetails() {
-    const { id } = useParams();
+    const { id } = useParams()
+    const navigate = useNavigate()
+    const { user, isAuthenticated } = useAuth()
     const [ticketCount, setTicketCount] = useState(0)
+    const [modalIsOpen, setModalIsOpen] = useState(false)
     const [event, setEvent] = useState({
         category: {},
         venue: {}
     })
+
+    const {
+    values,
+    errors,
+    handleChange,
+    handleSubmit
+  } = useForm({
+    ticketQuantity: 1,
+    firstName: '',
+    lastName: '',
+    address: '',
+    postalCode: '',
+    city: ''
+  })
 
     useEffect( () => {
         getEvent()
@@ -32,6 +52,37 @@ export default function EventDetails() {
         const res = await fetch(`${apiBaseUrls.bookingService}/${id}`)
         const data = await res.json()
         setTicketCount(data)
+    }
+
+    function openBookingModal() {
+        if (!isAuthenticated)
+            navigate("/login")
+
+        setModalIsOpen(true)
+    }
+
+    async function submitBooking(formData) {
+        console.log(`eventID: ${id}`)
+        console.log(`userEmail: ${user.email}`)
+
+        const data = {
+            eventId: id,
+            ticketQuantity: formData.ticketQuantity,
+            firstName: formData.firstName,
+            lastName: formData.lastName,
+            email: user.email,
+            streetAddress: formData.address,
+            postalCode: formData.postalCode,
+            city: formData.city
+        }
+
+        var res = await fetch(apiBaseUrls.bookingService, {
+            method: "POST",
+            headers: { "content-type": "application/json"},
+            body: JSON.stringify(data)
+        })
+
+        if (res.ok) navigate("/dashboard")
     }
 
     let imgSrc;
@@ -55,8 +106,86 @@ export default function EventDetails() {
       }
 
 
+
   return (
     <>
+
+    <BookEventModal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)}>
+        <form className='book-event-form-modal' noValidate onSubmit={handleSubmit(submitBooking)}>
+            <h4>Enter information</h4>
+            
+            <div className='input-group'>
+                <label htmlFor='firstName'>First Name</label>
+                <input 
+                    id='firstName'
+                    data-validation="firstName"
+                    value={values.firstName}
+                    onChange={handleChange}
+                />
+                {errors.firstName && <span className="error">{errors.firstName}</span>}
+            </div>
+
+            <div className='input-group'>
+                <label htmlFor='lastName'>Last Name</label>
+                <input 
+                    id='lastName'
+                    data-validation="lastName"
+                    value={values.lastName}
+                    onChange={handleChange}
+                />
+                {errors.lastName && <span className="error">{errors.lastName}</span>}
+            </div>
+
+            <div className='input-group'>
+                <label htmlFor='address'>Address Name</label>
+                <input 
+                    id='address'
+                    data-validation="address"
+                    value={values.address}
+                    onChange={handleChange}
+                />
+                {errors.address && <span className="error">{errors.address}</span>}
+            </div>
+
+            <div className='input-group'>
+                <label htmlFor='postalCode'>Postal Code</label>
+                <input 
+                    id='postalCode'
+                    data-validation="postalCode"
+                    value={values.postalCode}
+                    onChange={handleChange}
+                />
+                {errors.postalCode && <span className="error">{errors.postalCode}</span>}
+            </div>
+
+            <div className='input-group'>
+                <label htmlFor='city'>City</label>
+                <input 
+                    id='city'
+                    data-validation="city"
+                    value={values.city}
+                    onChange={handleChange}
+                />
+                {errors.city && <span className="error">{errors.city}</span>}
+            </div>
+
+            <div className='input-group'>
+                <label htmlFor='ticketQuantity'>Ticket quantity</label>
+                <input 
+                    type='number' 
+                    id='ticketQuantity' 
+                    min="1" 
+                    max="50"
+                    value={values.ticketQuantity}
+                    onChange={handleChange} 
+                />
+            </div>
+
+        <button className='btn btn-primary'>Book</button>
+        </form>
+        
+    </BookEventModal>
+
     <div className='section-event-details'>
         <div className='header'>
             <img src={imgSrc} alt={event.title} />
@@ -116,7 +245,7 @@ export default function EventDetails() {
     </div>
 
     <div className='booking-button'>
-        <button>
+        <button onClick={openBookingModal}>
             <span>Book Event</span>
             <span>{event.ticketPrice} kr</span>
         </button>

@@ -39,6 +39,46 @@ export function validateField({ id, value, relatedValues = {}, setErrors }) {
       setErrors(prev => ({ ...prev, confirmPassword: '' }));
     }
   }
+
+  else if (id === "firstName") {
+    if (!value) {
+      setErrors(prev => ({ ...prev, firstName: 'Field is required' }));
+    } else {
+      setErrors(prev => ({ ...prev, firstName: '' }));
+    }
+  }
+
+  else if (id === "lastName") {
+    if (!value) {
+      setErrors(prev => ({ ...prev, lastName: 'Field is required' }));
+    } else {
+      setErrors(prev => ({ ...prev, lastName: '' }));
+    }
+  }
+
+  else if (id == "address") {
+    if (!value) {
+      setErrors(prev => ({ ...prev, address: 'Field is required' }));
+    } else {
+      setErrors(prev => ({ ...prev, address: '' }));
+    }
+  }
+
+  else if (id == "postalCode") {
+    if (!value) {
+      setErrors(prev => ({ ...prev, postalCode: 'Field is required' }));
+    } else {
+      setErrors(prev => ({ ...prev, postalCode: '' }));
+    }
+  }
+
+  else if (id == "city") {
+    if (!value) {
+      setErrors(prev => ({ ...prev, city: 'Field is required' }));
+    } else {
+      setErrors(prev => ({ ...prev, city: '' }));
+    }
+  }
 }
 
 export function validateForm(formData, setErrors) {
