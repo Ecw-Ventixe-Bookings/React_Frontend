@@ -76,9 +76,14 @@ export default function EventDetails() {
             city: formData.city
         }
 
+        const token = localStorage.getItem('token')
+
         var res = await fetch(apiBaseUrls.bookingService, {
             method: "POST",
-            headers: { "content-type": "application/json"},
+            headers: { 
+                "content-type": "application/json",
+                'Authorization': `Bearer ${token}`
+            },
             body: JSON.stringify(data)
         })
 
