@@ -1,8 +1,13 @@
+const getEnvVar = (key) => {
+    // import api urls, priority: runtime config (public/env.js) > Vite env (./config.env)
+  return ( import.meta.env[key] || window._env_?.[key] )
+}
+
 export const apiBaseUrls = {
-    eventService: "https://localhost:7212",
-    bookingService: "https://localhost:7086/api/bookings",
-    CreateAccount: "https://localhost:7211/api/account/create",
-    VerifyEmail: "https://localhost:7211/api/account/verify",
-    Login: "https://localhost:7211/api/auth/login",
-    Logout: "https://localhost:7211/api/auth/logout"
+  eventService: getEnvVar("VITE_API_EVENTSERVICE"),
+  bookingService: getEnvVar("VITE_API_BOOKINGSERVICE"),
+  CreateAccount: getEnvVar("VITE_API_CREATEACCOUNT"),
+  VerifyEmail: getEnvVar("VITE_API_VERIFYEMAIL"),
+  Login: getEnvVar("VITE_API_LOGIN"),
+  Logout: getEnvVar("VITE_API_LOGOUT"),
 }
