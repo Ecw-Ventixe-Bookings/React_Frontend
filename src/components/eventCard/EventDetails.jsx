@@ -10,32 +10,19 @@ import defaultEventGenericImg from "../../assets/images/DefaultEventGeneric.jpg"
 
 import './eventDetails.css'
 import { useAuth } from '../../Contexts/AuthContext'
-import { useForm } from '../../customHooks/useForm'
 
 export default function EventDetails() {
     const { id } = useParams()
     const navigate = useNavigate()
     const { user, isAuthenticated } = useAuth()
     const [ticketCount, setTicketCount] = useState(0)
+    const [ticketQuantity, setTicketQuantity] = useState(1)
     const [modalIsOpen, setModalIsOpen] = useState(false)
     const [event, setEvent] = useState({
         category: {},
         venue: {}
     })
 
-    const {
-    values,
-    errors,
-    handleChange,
-    handleSubmit
-  } = useForm({
-    ticketQuantity: 1,
-    firstName: '',
-    lastName: '',
-    address: '',
-    postalCode: '',
-    city: ''
-  })
 
     useEffect( () => {
         getEvent()
@@ -49,9 +36,10 @@ export default function EventDetails() {
     }
 
     async function getTicketCount() {
-        const res = await fetch(`${apiBaseUrls.bookingService}/${id}`)
+        const res = await fetch(`${apiBaseUrls.bookingService}/count/${id}`)
         const data = await res.json()
-        setTicketCount(data)
+        
+        setTicketCount(data.count)
     }
 
     function openBookingModal() {
@@ -61,22 +49,18 @@ export default function EventDetails() {
         setModalIsOpen(true)
     }
 
-    async function submitBooking(formData) {
-        console.log(`eventID: ${id}`)
-        console.log(`userEmail: ${user.email}`)
+    async function submitBooking(e) {
+        e.preventDefault()
 
         const data = {
             eventId: id,
-            ticketQuantity: formData.ticketQuantity,
-            firstName: formData.firstName,
-            lastName: formData.lastName,
-            email: user.email,
-            streetAddress: formData.address,
-            postalCode: formData.postalCode,
-            city: formData.city
+            ticketQuantity: ticketQuantity,
+            accountId: user.sub
         }
 
         const token = localStorage.getItem('token')
+
+        console.log(data)
 
         var res = await fetch(apiBaseUrls.bookingService, {
             method: "POST",
@@ -116,79 +100,32 @@ export default function EventDetails() {
     <>
 
     <BookEventModal isOpen={modalIsOpen} onClose={() => setModalIsOpen(false)}>
-        <form className='book-event-form-modal' noValidate onSubmit={handleSubmit(submitBooking)}>
-            <h4>Enter information</h4>
-            
-            <div className='input-group'>
-                <label htmlFor='firstName'>First Name</label>
-                <input 
-                    id='firstName'
-                    data-validation="firstName"
-                    value={values.firstName}
-                    onChange={handleChange}
-                />
-                {errors.firstName && <span className="error">{errors.firstName}</span>}
-            </div>
+        {isAuthenticated ?
+        <form className='book-event-form-modal' noValidate onSubmit={submitBooking}>
+            <h4>{event.title}</h4>
 
             <div className='input-group'>
-                <label htmlFor='lastName'>Last Name</label>
-                <input 
-                    id='lastName'
-                    data-validation="lastName"
-                    value={values.lastName}
-                    onChange={handleChange}
-                />
-                {errors.lastName && <span className="error">{errors.lastName}</span>}
+                <label htmlFor='ticketQuantity'>Tickets</label>
+                <select name="ticketQuantity" id="ticketQuantity" onChange={e => setTicketQuantity(Number(e.target.value))}>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                </select>
             </div>
 
-            <div className='input-group'>
-                <label htmlFor='address'>Address Name</label>
-                <input 
-                    id='address'
-                    data-validation="address"
-                    value={values.address}
-                    onChange={handleChange}
-                />
-                {errors.address && <span className="error">{errors.address}</span>}
+            <div>
+                <p>Confirmation will be sent to</p>
+                <p>{user.email}</p>
             </div>
 
-            <div className='input-group'>
-                <label htmlFor='postalCode'>Postal Code</label>
-                <input 
-                    id='postalCode'
-                    data-validation="postalCode"
-                    value={values.postalCode}
-                    onChange={handleChange}
-                />
-                {errors.postalCode && <span className="error">{errors.postalCode}</span>}
-            </div>
-
-            <div className='input-group'>
-                <label htmlFor='city'>City</label>
-                <input 
-                    id='city'
-                    data-validation="city"
-                    value={values.city}
-                    onChange={handleChange}
-                />
-                {errors.city && <span className="error">{errors.city}</span>}
-            </div>
-
-            <div className='input-group'>
-                <label htmlFor='ticketQuantity'>Ticket quantity</label>
-                <input 
-                    type='number' 
-                    id='ticketQuantity' 
-                    min="1" 
-                    max="50"
-                    value={values.ticketQuantity}
-                    onChange={handleChange} 
-                />
-            </div>
-
-        <button className='btn btn-primary'>Book</button>
+            <button className='btn btn-primary'>Book</button>        
         </form>
-        
+        : <p></p>
+        }
     </BookEventModal>
 
     <div className='section-event-details'>

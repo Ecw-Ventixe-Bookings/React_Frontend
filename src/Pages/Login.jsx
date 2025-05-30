@@ -14,7 +14,7 @@ export const Login = () => {
     
     console.log(`${email} <${password}>`)
 
-    const res = await fetch(apiBaseUrls.Login, {
+    const res = await fetch(`${apiBaseUrls.authService}/login`, {
       method: "POST",
       headers: {
         'content-type': 'application/json'

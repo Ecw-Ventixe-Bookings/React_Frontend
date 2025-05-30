@@ -13,13 +13,15 @@ export const Register = () => {
     handleChange,
     handleSubmit
   } = useForm({
+    firstName: '',
+    lastName: '',
     email: '',
     password: '',
     confirmPassword: ''
   });
 
   async function onSubmit(formData) {
-    const res = await fetch(apiBaseUrls.CreateAccount, {
+    const res = await fetch(`${apiBaseUrls.authService}/register`, {
       method: "POST",
       headers: {
         'content-type': 'application/json'
@@ -33,6 +35,28 @@ export const Register = () => {
   return (
     <form className='' onSubmit={handleSubmit(onSubmit)}>
       <span className='title'>Register</span>
+
+      <div className='input-group'>
+          <label htmlFor='firstName'>First Name</label>
+          <input 
+              id='firstName'
+              data-validation="firstName"
+              value={values.firstName}
+              onChange={handleChange}
+          />
+          {errors.firstName && <span className="error">{errors.firstName}</span>}
+      </div>
+
+      <div className='input-group'>
+          <label htmlFor='lastName'>Last Name</label>
+          <input 
+              id='lastName'
+              data-validation="lastName"
+              value={values.lastName}
+              onChange={handleChange}
+          />
+          {errors.lastName && <span className="error">{errors.lastName}</span>}
+      </div>
 
       <div className='input-group'>
         <label htmlFor="email">Email</label>

@@ -47,7 +47,7 @@ export default function ConfirmEmail() {
       email: email
     })
 
-    const res = await fetch(apiBaseUrls.VerifyEmail, {
+    const res = await fetch(`${apiBaseUrls.authService}/verify`, {
       method: "POST",
       headers: { 'content-type': 'application/json' },
       body: jsonData
