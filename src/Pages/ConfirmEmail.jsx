@@ -5,12 +5,14 @@ ChatGpt and ClaudeAi has been used to create this page, the code has been altere
 import React, { useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { apiBaseUrls } from '../helpers/apiHelper';
+import Loader from '../components/loader';
 
 export default function ConfirmEmail() {
     const [code, setCode] = useState(["", "", "", "", "", ""])
     const inputsRef = useRef([])
     const navigate = useNavigate()
     const {email} = useParams()
+    const [isLoading, setIsLoading] = useState(false)
 
     const handleChange = (value, index) => {
     if (/^\d?$/.test(value)) {
@@ -40,20 +42,33 @@ export default function ConfirmEmail() {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const enteredCode = code.join('');
+    setIsLoading(true)
 
-    const jsonData =JSON.stringify( {
-      code: enteredCode,
-      email: email
-    })
+    try {
+      const enteredCode = code.join('');
 
-    const res = await fetch(`${apiBaseUrls.authService}/verify`, {
-      method: "POST",
-      headers: { 'content-type': 'application/json' },
-      body: jsonData
-    })
+      const jsonData =JSON.stringify( {
+        code: enteredCode,
+        email: email
+      })
 
-    if (res.ok) navigate("/login")
+      const res = await fetch(`${apiBaseUrls.authService}/verify`, {
+        method: "POST",
+        headers: { 'content-type': 'application/json' },
+        body: jsonData
+      })
+
+      if (res.ok) navigate("/login")
+    }
+
+    catch (error) {
+
+    }
+
+    finally {
+      setIsLoading(false)
+    }
+    
   };
 
   return (
@@ -79,8 +94,16 @@ export default function ConfirmEmail() {
         <div>
             <p>Check your email for a verification code</p>
         </div>           
-
-        <button className='confirm-email-btn' type="submit">Verify</button>
+{/* confirm-email-btn */}
+        <button className='btn btn-primary' type="submit">
+          {isLoading
+            ? (
+              <Loader />
+            )
+            : (
+              'Verify'
+            )}
+        </button>
     </form>
   );
 }

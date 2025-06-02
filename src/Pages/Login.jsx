@@ -2,37 +2,50 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { apiBaseUrls } from '../helpers/apiHelper';
 import { useAuth } from '../Contexts/AuthContext';
+import Loader from '../components/loader';
 
 export const Login = () => {
   const [email, setEmail] = useState('')
   const [password, setPassword] = useState('')
   const navigate = useNavigate()
   const {login} = useAuth()
+  const [isLoading, setIsLoading] = useState(false)
 
   async function handleSubmit(e) {
     e.preventDefault();
-    
-    console.log(`${email} <${password}>`)
+    setIsLoading(true)
 
-    const res = await fetch(`${apiBaseUrls.authService}/login`, {
-      method: "POST",
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify( {
-        "email": email,
-        "password": password
-      } )
-    })
+    try {
+      const res = await fetch(`${apiBaseUrls.authService}/login`, {
+        method: "POST",
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify( {
+          "email": email,
+          "password": password
+        } )
+      })
 
-    if (res.ok) {
-      const jwt = await res.text()
+      if (res.ok) {
+        const jwt = await res.text()
 
-      if (jwt) {
-        login(jwt)
-        navigate('/')
+        if (jwt) {
+          login(jwt)
+          navigate('/')
+        }
       }
     }
+
+    catch (error) {
+
+    }
+
+    finally {
+      setIsLoading(false)
+    }
+
+    
   }
 
   return (
@@ -57,7 +70,15 @@ export const Login = () => {
         />
       </div>
 
-      <button type='submit' className='btn btn-primary'>Login</button>
+      <button type='submit' className='btn btn-primary' disabled={isLoading}>
+        {isLoading
+          ? (
+            <Loader />
+          )
+          : (
+            'Login'
+          )}
+      </button>
 
       <p>Dont have an account? <Link to={"/register"}>Create one</Link></p>
     </form>

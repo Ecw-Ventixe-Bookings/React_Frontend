@@ -10,6 +10,7 @@ import defaultEventGenericImg from "../../assets/images/DefaultEventGeneric.jpg"
 
 import './eventDetails.css'
 import { useAuth } from '../../Contexts/AuthContext'
+import Loader from '../loader'
 
 export default function EventDetails() {
     const { id } = useParams()
@@ -22,6 +23,7 @@ export default function EventDetails() {
         category: {},
         venue: {}
     })
+    const [isLoading, setIsLoading] = useState(false)
 
 
     useEffect( () => {
@@ -51,27 +53,38 @@ export default function EventDetails() {
 
     async function submitBooking(e) {
         e.preventDefault()
+        setIsLoading(true)
 
-        const data = {
-            eventId: id,
-            ticketQuantity: ticketQuantity,
-            accountId: user.sub
+        try {
+            const data = {
+                eventId: id,
+                ticketQuantity: ticketQuantity,
+                accountId: user.sub
+            }
+
+            const token = localStorage.getItem('token')
+
+            console.log(data)
+
+            var res = await fetch(apiBaseUrls.bookingService, {
+                method: "POST",
+                headers: { 
+                    "content-type": "application/json",
+                    'Authorization': `Bearer ${token}`
+                },
+                body: JSON.stringify(data)
+            })
+
+            if (res.ok) navigate("/dashboard")
+        }
+        
+        catch (error) {
+
         }
 
-        const token = localStorage.getItem('token')
-
-        console.log(data)
-
-        var res = await fetch(apiBaseUrls.bookingService, {
-            method: "POST",
-            headers: { 
-                "content-type": "application/json",
-                'Authorization': `Bearer ${token}`
-            },
-            body: JSON.stringify(data)
-        })
-
-        if (res.ok) navigate("/dashboard")
+        finally {
+            setIsLoading(false)
+        }
     }
 
     let imgSrc;
@@ -122,7 +135,15 @@ export default function EventDetails() {
                 <p>{user.email}</p>
             </div>
 
-            <button className='btn btn-primary'>Book</button>        
+            <button className='btn btn-primary' disabled={isLoading}>
+                {isLoading
+                    ? (
+                        <Loader />
+                    )
+                    : (
+                        'Book'
+                    )}
+            </button>        
         </form>
         : <p></p>
         }
