@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 import { useForm } from '../customHooks/useForm'
 import { Link, useNavigate } from 'react-router-dom';
 import { apiBaseUrls } from '../helpers/apiHelper';
-import {Loader} from '../components/Loader';
+import Loader from '../components/Loader';
 
 
 export const Register = () => {
