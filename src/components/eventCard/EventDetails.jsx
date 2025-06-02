@@ -10,7 +10,8 @@ import defaultEventGenericImg from "../../assets/images/DefaultEventGeneric.jpg"
 
 import './eventDetails.css'
 import { useAuth } from '../../Contexts/AuthContext'
-import Loader from '../loader'
+import {Loader} from '../components/Loader';
+
 
 export default function EventDetails() {
     const { id } = useParams()

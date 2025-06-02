@@ -5,7 +5,7 @@ ChatGpt and ClaudeAi has been used to create this page, the code has been altere
 import React, { useRef, useState } from 'react'
 import { useNavigate, useParams } from 'react-router-dom';
 import { apiBaseUrls } from '../helpers/apiHelper';
-import Loader from '../components/loader';
+import {Loader} from '../components/Loader';
 
 export default function ConfirmEmail() {
     const [code, setCode] = useState(["", "", "", "", "", ""])

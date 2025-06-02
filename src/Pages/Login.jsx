@@ -2,7 +2,8 @@ import React, { useState } from 'react'
 import { Link, useNavigate } from 'react-router-dom';
 import { apiBaseUrls } from '../helpers/apiHelper';
 import { useAuth } from '../Contexts/AuthContext';
-import Loader from '../components/loader';
+import {Loader} from '../components/Loader';
+
 
 export const Login = () => {
   const [email, setEmail] = useState('')
