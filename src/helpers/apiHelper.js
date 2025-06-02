@@ -8,8 +8,8 @@ export const apiBaseUrls = {
   bookingService: getEnvVar("VITE_API_BOOKINGSERVICE"),
   authService: getEnvVar("VITE_API_AUTHSERVICE"),
   
-  CreateAccount: getEnvVar("VITE_API_CREATEACCOUNT"),
-  VerifyEmail: getEnvVar("VITE_API_VERIFYEMAIL"),
-  Login: getEnvVar("VITE_API_LOGIN"),
-  Logout: getEnvVar("VITE_API_LOGOUT"),
+  // CreateAccount: getEnvVar("VITE_API_CREATEACCOUNT"),
+  // VerifyEmail: getEnvVar("VITE_API_VERIFYEMAIL"),
+  // Login: getEnvVar("VITE_API_LOGIN"),
+  // Logout: getEnvVar("VITE_API_LOGOUT"),
 }

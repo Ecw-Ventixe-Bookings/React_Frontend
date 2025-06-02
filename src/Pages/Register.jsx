@@ -5,6 +5,7 @@ import { apiBaseUrls } from '../helpers/apiHelper';
 
 
 export const Register = () => {
+  const [isLoading, setIsLoading] = useState(false)
   const navigate = useNavigate()
 
   const {
@@ -21,15 +22,29 @@ export const Register = () => {
   });
 
   async function onSubmit(formData) {
-    const res = await fetch(`${apiBaseUrls.authService}/register`, {
-      method: "POST",
-      headers: {
-        'content-type': 'application/json'
-      },
-      body: JSON.stringify(formData)
-    })
+    setIsLoading(true)
 
-    if (res.ok) navigate(`/confirm-email/${formData.email}`)
+    try {
+      const res = await fetch(`${apiBaseUrls.authService}/register`, {
+        method: "POST",
+        headers: {
+          'content-type': 'application/json'
+        },
+        body: JSON.stringify(formData)
+      })
+
+      if (res.ok) navigate(`/confirm-email/${formData.email}`)
+    }
+
+    catch (error) {
+
+    }
+
+    finally {
+      setIsLoading(false)
+    }
+
+    
   }
 
   return (
@@ -94,7 +109,18 @@ export const Register = () => {
         {errors.confirmPassword && <span className="error">{errors.confirmPassword}</span>}
       </div>
 
-      <button type='submit' className='btn btn-primary'>Register</button>
+      <button type='submit' className='btn btn-primary' disabled={isLoading}>
+        {isLoading 
+          ? (
+            <>
+              Loading ...
+            </>
+          ) 
+          : (
+            'Register'
+          )}
+      
+      </button>
 
       <p>Already have an account? <Link to={"/login"}>Log in</Link></p>
 
