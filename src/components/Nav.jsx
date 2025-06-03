@@ -43,13 +43,14 @@ export const Nav = ({pageName = 'Dashboard', showBackButton}) => {
             <span>Events</span>
           </NavLink>
           
-          {isAuthenticated ? (
-            <NavLink to="/dashboard">
-              <i className="bi bi-grid"></i> 
-              <span>Dashboard</span>
-            </NavLink>
-          ):(<></>)}
           
+
+          {isAuthenticated ? (
+            <NavLink to="/bookings">
+              <i className="bi bi-check-square"></i>
+              <span>Bookings</span>
+            </NavLink>            
+          ):(<></>)}          
           
         </div>
     </nav>

@@ -153,8 +153,16 @@ header {
         }
     }
 
+    .header-links {
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+    }
+
     @media(width > 768px) {
-        display: block;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
     }
 }
 

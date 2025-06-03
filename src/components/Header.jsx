@@ -1,8 +1,10 @@
 import React from 'react'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
+import { useAuth } from '../Contexts/AuthContext'
 
 export const Header = ({pageName = 'Dashboard', showBackButton}) => {
   const navigate = useNavigate()
+  const {isAuthenticated, user, logout} = useAuth()
 
   return (
     <header>
@@ -17,6 +19,19 @@ export const Header = ({pageName = 'Dashboard', showBackButton}) => {
           )} 
           {showBackButton ? 'Event Details' : pageName}
         </h4>
+
+          {isAuthenticated ? (
+            <div className='header-links'>
+              <p>{user.email}</p>
+              <button className='btn btn-primary' onClick={logout}>Logout</button>
+            </div>
+            
+          ) : (
+            <div className='header-links'>
+            <Link to={'/login'} >Login</Link>
+            <Link to={'/register'} >Register</Link>
+            </div>
+          )}
 
     </header>
   )

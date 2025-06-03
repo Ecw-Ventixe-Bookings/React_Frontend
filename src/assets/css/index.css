@@ -49,7 +49,10 @@ h6 {
 
 /* #region || Links and forms */
 a {
-  text-decoration: none;  
+  text-decoration: none;
+  color: var(--secondary-100);
+  font-size: 1.1rem;
+  font-weight: var(--font-weight-semibold);
 }
 
 button {
@@ -97,6 +100,17 @@ form {
   }
 
   
+}
+
+select {
+  border: 1px solid var(--primary-100);
+  border-radius: 16px;
+  font-size: 1.1rem;
+  padding: 0.5rem
+}
+
+select:focus {
+  outline: none;
 }
 
 .btn {

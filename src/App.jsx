@@ -10,6 +10,7 @@ import { Events } from "./Pages/Events"
 import EventDetails from "./components/eventCard/EventDetails"
 import ConfirmEmail from "./Pages/ConfirmEmail"
 import { AuthProvider } from "./Contexts/AuthContext"
+import Bookings from "./Pages/Bookings"
 
 
 function App() {
@@ -21,6 +22,7 @@ function App() {
         
         <Route element={<PortalLayout />}>
           <Route path="/dashboard" element={<DashBoard />} />
+          <Route path="/bookings" element={<Bookings />} />
           <Route path="/" element={<Events />} />
           <Route path="/events/:id" element={<EventDetails />} />
         </Route>
