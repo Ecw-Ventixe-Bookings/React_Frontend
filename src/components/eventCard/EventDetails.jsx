@@ -60,7 +60,8 @@ export default function EventDetails() {
             const data = {
                 eventId: id,
                 ticketQuantity: ticketQuantity,
-                accountId: user.sub
+                accountId: user.sub,
+                accountEmail: user.email
             }
 
             const token = localStorage.getItem('token')
@@ -76,7 +77,7 @@ export default function EventDetails() {
                 body: JSON.stringify(data)
             })
 
-            if (res.ok) navigate("/dashboard")
+            if (res.ok) navigate("/bookings")
         }
         
         catch (error) {
