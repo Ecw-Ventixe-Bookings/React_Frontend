@@ -1,5 +1,7 @@
 import React from 'react'
 import { Outlet } from 'react-router-dom'
+import CookieConsent from 'react-cookie-consent'
+
 
 function CenterLayout() {
   return (
