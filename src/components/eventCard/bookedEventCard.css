@@ -67,3 +67,39 @@
         border-radius: 16px;
     }
 }
+
+
+@media (width < 1200px) {
+    .boked-event-card {
+        flex-direction: column;
+        align-items: center;
+
+        .event-main-info {
+            position: relative;
+            flex-direction: column;
+            align-items: center;
+
+            text-align: center;
+        }
+
+        .event-image {
+            width: 100%;
+        }
+
+        .event-header {
+            text-align: center;
+
+            .event-category {
+                position: absolute;
+                top: 5px;
+                left: 5px;
+            }
+        }
+
+        .event-details {
+            text-align: center;
+        }
+    }
+
+    
+}
