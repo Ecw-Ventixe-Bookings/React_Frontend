@@ -2,7 +2,7 @@ import React, { useState } from 'react'
 
 
 import appLogo from '../assets/images/VentixeLogo.svg'
-import { NavLink, useNavigate } from 'react-router-dom'
+import { Link, NavLink, useNavigate } from 'react-router-dom'
 import { useAuth } from '../Contexts/AuthContext'
 
 export const Nav = ({pageName = 'Dashboard', showBackButton}) => {
@@ -50,7 +50,16 @@ export const Nav = ({pageName = 'Dashboard', showBackButton}) => {
               <i className="bi bi-check-square"></i>
               <span>Bookings</span>
             </NavLink>            
-          ):(<></>)}          
+          ):(<></>)}
+
+          {showMenu ? (
+            <Link to={'/Login'}>
+              <i class="bi bi-box-arrow-in-right"></i>
+              <span>Login</span>
+            </Link>
+          ) : (
+            <></>
+          )}
           
         </div>
     </nav>
