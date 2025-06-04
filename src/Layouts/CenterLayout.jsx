@@ -5,6 +5,7 @@ function CenterLayout() {
   return (
 
     <div className='center-wrapper'>
+        <CookieConsent>This website use essential cookies for handling authentication</CookieConsent>        
         <main>
             <Outlet />
         </main>

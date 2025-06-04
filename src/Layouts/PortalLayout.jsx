@@ -3,6 +3,7 @@ import {Nav} from '../components/Nav'
 import {Header} from '../components/Header'
 import {Footer} from '../components/Footer'
 import { Outlet, useLocation } from 'react-router-dom'
+import CookieConsent from 'react-cookie-consent'
 
 function PortalLayout() {
   const location = useLocation()
@@ -19,6 +20,7 @@ function PortalLayout() {
 
   return (
     <div className='portal-wrapper'>
+        <CookieConsent>This website use essential cookies for handling authentication</CookieConsent>
         <Nav pageName = {pageName} showBackButton={showBackButton} />
         <Header pageName = {pageName} showBackButton={showBackButton} />
             <main>
